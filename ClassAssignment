@@ -1,1 +1,154 @@
 
+using System;
+
+namespace Assignment
+{
+    class Program
+    {
+
+        static void Main(string[] args)
+        {
+            Manager.Run();
+        }
+
+       
+
+    }
+
+    class Manager
+    {
+        static Employee[] emplist = new Employee[10];
+        static string[] empID = { "E101", "E102", "E103", "E104", "E105", "E106", "E107", "E108", "E109", "E110" };
+        static string[] empNames = { "Steven", "Diana", "Nancy","Deniel","Matthew","James", "Trenna", "Eleni", "Louise", "Kelly" };
+        static string[] departments = { "HR", "ACCT", "RD", "Marketing", "Fulfilment" };  // statically putting 5 department names into an array.
+        static string[] managerNames = { "Albert", "John", "Ella", "Kiya", "Kevin" };
+
+        
+        static public void Run()
+        {
+            int counter = 0;
+            for (int i=0;i<10;i++)
+            {
+                if(counter == 5)
+                {
+                    counter = 0;
+                }
+
+                emplist[i] = new Employee(empID[i], empNames[i], managerNames[counter], departments[counter]);  // creating object of employee and putting it's reference into Employee typed array
+                counter++;
+              
+            }
+
+            new Manager().inputData();
+
+        }
+
+         public void inputData()
+        {
+            Console.WriteLine("Enter manager's name(Albert, John, Ella, Kiya, Kevin): ");
+            string name = Console.ReadLine();   // 
+            display(ReportOnEmployee(name), name);  
+        }
+
+        public void display(Employee[] e,String name)
+        {
+            Console.WriteLine("Employee's working under Manager " + name + " are: ");
+            for(int i=0;i<e.Length;i++)
+            {
+                if(e[i] == null)
+                {
+                    break;
+                }
+                Console.WriteLine(e[i].getEmployeeID()+"\t"+e[i].getEmployeeName()+"\t"+e[i].getDepartment());
+            }
+
+
+        }
+
+        public Employee[] ReportOnEmployee(string mname)
+        {
+            Employee[] searchedList= new Employee[5];
+            int count = 0;
+
+            for (int i = 0; i < 10; i++)
+            {
+
+                if(emplist[i].getManagerName().Equals(mname,StringComparison.OrdinalIgnoreCase))
+                    {
+                    searchedList[count] = new Employee(emplist[i].getEmployeeID(),emplist[i].getEmployeeName(),emplist[i].getManagerName(),emplist[i].getDepartment());
+                    count++;
+                }
+
+            }
+
+
+            return searchedList;
+
+        }
+
+
+
+    }
+
+    class Employee
+    {
+        private String EmployeeID;
+        private String EmployeeName;
+        private String ManagerName;
+        private String Department;
+
+        public Employee(string eID, string eName, string mName, string dept)
+        {
+            this.EmployeeID = eID;
+            this.EmployeeName = eName;
+            this.ManagerName = mName;
+            this.Department = dept;
+        }
+
+
+        public string getEmployeeID()
+        {
+            return this.EmployeeID;
+        }
+
+        public void setEmployeeID(string eName)
+        {
+            this.EmployeeID = eName;
+        }
+
+
+        public string getEmployeeName()
+        {
+            return this.EmployeeName;
+        }
+
+        public void setEmployeeName(string ename)
+        {
+            this.EmployeeName = ename;
+        }
+
+
+        public string getManagerName()
+        {
+            return this.ManagerName;
+        }
+
+        public void setManagerName(string mname)
+        {
+            this.ManagerName = mname;
+        }
+        public string getDepartment()
+        {
+            return this.Department;
+        }
+
+        public void setDepartment(string dept)
+        {
+            this.Department = dept;
+        }
+
+
+
+    }
+
+}
